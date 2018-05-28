@@ -3,7 +3,8 @@ package sk.tuke.gamestudio.client.memory.engine;
 public class Tile {
     public enum State {
         OPEN,
-        CLOSED
+        CLOSED,
+        HIGHLIGHT
     }
 
     private State state = State.CLOSED;
@@ -12,7 +13,7 @@ public class Tile {
         return state;
     }
 
-    void setState(State state) {
+    public void setState(State state) {
         this.state = state;
     }
 }

@@ -32,14 +32,23 @@ public class Field {
         if (tile.getState() == Tile.State.CLOSED) {
             tile.setState(Tile.State.OPEN);
             if (tile instanceof Target) {
-                points += targetCount * 10;
+                points += targetCount * 200;
             } else {
                 errors += 1;
             }
         }
     }
 
-    public void generate() {
+    public void swtichState(int row, int column) {
+        Tile tile = tiles[row][column];
+        if (tile.getState() == Tile.State.OPEN) {
+            tile.setState(Tile.State.CLOSED);
+        } else {
+            tile.setState(Tile.State.OPEN);
+        }
+    }
+
+    private void generate() {
         Random rows = new Random();
         Random cols = new Random();
         int targets = targetCount;
