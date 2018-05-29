@@ -33,5 +33,4 @@ public class RatingRestService {
     public List<Rating> getAllRatings(@PathParam("game") String game) {
         return ratingService.getAllRatings(game);
     }
-
 }

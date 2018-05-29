@@ -100,6 +100,7 @@ public class ConsoleUI implements UserInterface {
 
     @Override
     public void update() {
+        System.out.println("Score: " + field.getPoints() + "\n");
         char[] rows = {' ', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P'};
         for (int i = 0; i <= field.getRowCount(); i++) {
             if (i == 1) {
@@ -109,24 +110,24 @@ public class ConsoleUI implements UserInterface {
             for (int j = 0; j < field.getColumnCount(); j++) {
                 if (i == 0) {
                     if (j < 10) {
-                        System.out.print(" " + j + " ");
-                    } else {
                         System.out.print(" " + j);
+                    } else {
+                        System.out.print(j);
                     }
                 } else {
                     switch (field.getTile(i - 1, j).getState()) {
                         case CLOSED:
-                            System.out.print(whi + " X " + reset);
+                            System.out.print(whi + " X" + reset);
                             break;
                         case OPEN:
                             if (field.getTile(i - 1, j) instanceof Target) {
-                                System.out.print(blue + " X " + reset);
+                                System.out.print(blue + " X" + reset);
                             } else {
-                                System.out.print(red + " X " + reset);
+                                System.out.print(red + " X" + reset);
                             }
                             break;
                         case HIGHLIGHT:
-                            System.out.print(cya + " X " + reset);
+                            System.out.print(cya + " X" + reset);
                     }
                 }
             }
@@ -172,7 +173,6 @@ public class ConsoleUI implements UserInterface {
     }
 
     private void processInput() {
-        System.out.println();
         System.out.println("Highlight squares");
         try {
             handleInput(readLine());

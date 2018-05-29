@@ -28,7 +28,7 @@ public class ConsoleUI implements UserInterface {
     public void newGame(Field field) {
         this.field = field;
         try {
-            scramble(field);
+            scramble();
         } catch (WrongFormatException e) {
             e.printStackTrace();
         }
@@ -50,7 +50,7 @@ public class ConsoleUI implements UserInterface {
         } while (true);
     }
 
-    private void scramble(Field field) throws WrongFormatException {
+    private void scramble() throws WrongFormatException {
         Random num = new Random();
         for (int i = 0; i < 250; i++) {
             int a = num.nextInt(4);

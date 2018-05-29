@@ -90,6 +90,7 @@ public class ClientConsole implements UserInterface {
         }
 
         System.out.println("Rating: " + ratingService.getAverageRating(lastPlayedGame));
+        getChampion(lastPlayedGame);
         while (true) {
             System.out.println("\n1 - Run");
             System.out.println("2 - Rate the game");
@@ -215,10 +216,13 @@ public class ClientConsole implements UserInterface {
         switch (lastPlayedGame) {
             case "minesweeper":
                 new Minesweeper(inGameName);
+                break;
             case "stones":
                 new StonesPuzzle(inGameName);
+                break;
             case "memory":
                 new Memory(inGameName);
+                break;
         }
     }
 
@@ -255,6 +259,16 @@ public class ClientConsole implements UserInterface {
             for (Comment comment : comments) {
                 System.out.println(comment.getPlayer() + ": " + comment.getText());
             }
+        }
+    }
+
+    private void getChampion(String game) {
+        List<Score> champion = scoreService.getChampion(game);
+        if (!champion.isEmpty()) {
+            System.out.println("Champion of the game: " + champion.get(0).getPlayer() + " - " +
+                    champion.get(0).getPoints());
+        } else {
+            System.out.println("-no champions yet-");
         }
     }
 }

@@ -19,21 +19,34 @@ public class ScoreServiceImplJPA implements ScoreService {
     @Inject
     private JMSContext context;
 
-    @Resource(lookup = "jms/achievementQueue")
+    @Resource(lookup = "jms/championQueue")
     private Queue queue;
 
     @Override
     public void addScore(Score score) {
-        entityManager.persist(score);
-        if (score.getPoints() > 10000) {
-            String text = "New score achievement "+ score.getPlayer();
-            context.createProducer().send(queue, context.createTextMessage(text));
+        if (!getChampion(score.getGame()).isEmpty()) {
+            if (score.getPoints() > getChampion(score.getGame()).get(0).getPoints()) {
+                String text = "New champion " + score.getPlayer();
+                context.createProducer().send(queue, context.createTextMessage(text));
+            }
         }
+        entityManager.persist(score);
     }
+//
+//    @Override
+//    public void addScore(Score score) {
+//        entityManager.persist(score);
+//    }
 
     @Override
     public List<Score> getBestScoresForGame(String game) {
         return entityManager.createNamedQuery("Score.getBestScoresForGame", Score.class)
                 .setParameter("game", game).setMaxResults(10).getResultList();
+    }
+
+    @Override
+    public List<Score> getChampion(String game) {
+        return entityManager.createNamedQuery("Score.getBestScoresForGame", Score.class)
+                .setParameter("game", game).setMaxResults(1).getResultList();
     }
 }

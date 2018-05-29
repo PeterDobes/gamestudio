@@ -64,7 +64,7 @@ public class Settings implements Serializable {
         } catch (IOException | ClassNotFoundException e) {
             System.err.println("Setting difficulty to 'beginner'.");
         }
-        return TESTING;
+        return BEGINNER;
     }
 
 }

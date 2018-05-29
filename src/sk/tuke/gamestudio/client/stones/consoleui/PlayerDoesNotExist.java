@@ -1,4 +1,4 @@
-package sk.tuke.gamestudio.client.stones.engine.consoleui;
+package sk.tuke.gamestudio.client.stones.consoleui;
 
 class PlayerDoesNotExist extends Exception {
 

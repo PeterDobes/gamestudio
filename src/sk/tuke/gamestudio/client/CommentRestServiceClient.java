@@ -23,7 +23,7 @@ public class CommentRestServiceClient implements CommentService {
                     .request(MediaType.APPLICATION_JSON)
                     .post(Entity.entity(comment, MediaType.APPLICATION_JSON), Response.class);
         } catch (Exception e) {
-            throw new RuntimeException("Error adding comment", e);
+            System.err.println("Error adding comment");
         }
     }
 

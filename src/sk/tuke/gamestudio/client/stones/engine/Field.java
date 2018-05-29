@@ -38,22 +38,6 @@ public class Field implements Serializable {
                 ston++;
             }
         }
-//        stones = new Stone[rowCount][columnCount];
-//        Random rowN = new Random();
-//        Random colN = new Random();
-//        int stonsLeft = stoneCount;
-//
-//        while (stonsLeft > 0) {
-//            int row = rowN.nextInt(rowCount);
-//            int col = colN.nextInt(columnCount);
-//            if (stones[row][col] == null) {
-//                stones[row][col] = new Stone(stonsLeft);
-//                if (stonsLeft == stoneCount) {
-//                    space = new Space(row,col);
-//                }
-//                stonsLeft--;
-//            }
-//        }
     }
 
     public boolean isSolved() {

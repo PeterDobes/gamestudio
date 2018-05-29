@@ -23,7 +23,8 @@ public class RatingRestServiceClient implements RatingService {
                     .request(MediaType.APPLICATION_JSON)
                     .post(Entity.entity(rating, MediaType.APPLICATION_JSON), Response.class);
         } catch (Exception e) {
-            throw new RuntimeException("Error adding rating", e);
+            System.err.println("Error adding rating");
+            e.printStackTrace();
         }
     }
 
@@ -36,7 +37,7 @@ public class RatingRestServiceClient implements RatingService {
                     .request(MediaType.APPLICATION_JSON)
                     .get(new GenericType<String>() {});
         } catch (Exception e) {
-            throw new RuntimeException("Error loading rating", e);
+            return "Unable to load rating";
         }
     }
 

@@ -30,5 +30,12 @@ public class ScoreRestService {
     public List<Score> getBestScoresForGame(@PathParam("game") String game) throws ScoreException {
         return scoreService.getBestScoresForGame(game);
     }
+
+    @GET
+    @Path("/{game}/champion")
+    @Produces("application/json")
+    public List<Score> getChampion(@PathParam("game") String game) {
+        return scoreService.getChampion(game);
+    }
 }
 

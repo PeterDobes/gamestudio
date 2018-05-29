@@ -38,12 +38,9 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" scope="PROVIDED" name="GlassFish 5.181.0 - EJB" level="application_server_libraries" />
     <orderEntry type="library" scope="PROVIDED" name="GlassFish 5.181.0 - JMS: Java Message Service" level="application_server_libraries" />
-    <orderEntry type="library" scope="PROVIDED" name="GlassFish 5.181.0 - CDI: Contexts and Dependency Injection" level="application_server_libraries" />
     <orderEntry type="library" name="JPA 2.0-2.0" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="GlassFish 5.181.0 - RESTful Web Service" level="application_server_libraries" />
     <orderEntry type="library" scope="PROVIDED" name="GlassFish 5.181.0" level="application_server_libraries" />
-    <orderEntry type="library" name="org.glassfish.jersey.core:jersey-client:2.23.2" level="project" />
-    <orderEntry type="library" name="org.glassfish.jersey.media:jersey-media-moxy:2.23.2" level="project" />
     <orderEntry type="module-library">
       <library name="JUnit4">
         <CLASSES>
@@ -54,5 +51,7 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="org.glassfish.jersey.media:jersey-media-moxy:2.23.2" level="project" />
+    <orderEntry type="library" name="org.glassfish.jersey.core:jersey-client:2.23.2" level="project" />
   </component>
 </module>

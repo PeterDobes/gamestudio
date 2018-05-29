@@ -24,7 +24,7 @@ public class StonesPuzzle {
         name = gName;
         instance = this;
         userInterface = new ConsoleUI();
-        Field field = new Field(1,2);
+        Field field = new Field(3,3);
         userInterface.newGame(field);
     }
 

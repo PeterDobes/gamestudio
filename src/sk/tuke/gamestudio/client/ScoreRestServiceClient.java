@@ -9,6 +9,8 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ScoreRestServiceClient implements ScoreService {
@@ -36,7 +38,23 @@ public class ScoreRestServiceClient implements ScoreService {
                     .get(new GenericType<List<Score>>() {
                     });
         } catch (Exception e) {
-            throw new RuntimeException("Error loading score", e);
+            System.err.println("Error loading score");
+            return new ArrayList<>();
+        }
+    }
+
+    @Override
+    public List<Score> getChampion(String game) {
+        try {
+            Client client = ClientBuilder.newClient();
+            return client.target(URL)
+                    .path("/" + game + "/champion")
+                    .request(MediaType.APPLICATION_JSON)
+                    .get(new GenericType<List<Score>>() {
+                    });
+        } catch (Exception e) {
+            System.err.println("Error loading the champion");
+            return new ArrayList<>();
         }
     }
 }
