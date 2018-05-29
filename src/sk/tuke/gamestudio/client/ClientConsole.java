@@ -53,7 +53,7 @@ public class ClientConsole implements UserInterface {
             System.out.println(ratingService.getAverageRating("minesweeper"));
             System.out.print("2 - Stones - rating: ");
             System.out.println(ratingService.getAverageRating("stones"));
-            System.out.print("3 - Memory - rating: ");
+            System.out.print("3 - Memory Matrix - rating: ");
             System.out.println(ratingService.getAverageRating("memory"));
             System.out.println("\nX - exit");
             processInput(Choice.GAME);
@@ -85,7 +85,11 @@ public class ClientConsole implements UserInterface {
                         "" +
                                 "▒█▀▄▀█ ▒█▀▀▀ ▒█▀▄▀█  ▒█▀▀▀█ ▒█▀▀█ ▒█░░▒█ \n" +
                                 "▒█▒█▒█ ▒█▀▀▀ ▒█▒█▒█ ▒█░░▒█ ▒█▄▄▀ ▒█▄▄▄█ \n" +
-                                "▒█░░▒█ ▒█▄▄▄ ▒█░░▒█ ▒█▄▄▄█ ▒█░▒█ ░░▒█░░ \n\n\n");
+                                "▒█░░▒█ ▒█▄▄▄ ▒█░░▒█ ▒█▄▄▄█ ▒█░▒█ ░░▒█░░ \n" +
+                                "\n" +
+                                "▒█▀▄▀█ ░█▀▀█  ▀▀█▀▀▒▒█▀▀█ ▀█▀ ▀▄▒▄▀ \n" +
+                                "▒█▒█▒█ ▒█▄▄█   ▒█░░ ▒█▄▄▀   █░ ░▒█░░ \n" +
+                                "▒█░░▒█ ▒█░▒█ ░▒█░░ ▒█░▒█ ▄█▄ ▄▀▒▀▄ \n\n\n");
                 break;
         }
 
@@ -204,7 +208,7 @@ public class ClientConsole implements UserInterface {
         gameSubMenu();
     }
 
-    public void leaveAComment() {
+    private void leaveAComment() {
         System.out.println("Comment:");
         String text = readLine();
         if (!text.equals("")) {
