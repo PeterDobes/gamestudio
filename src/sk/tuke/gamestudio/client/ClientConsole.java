@@ -20,8 +20,8 @@ public class ClientConsole implements UserInterface {
     private ScoreRestServiceClient scoreService = new ScoreRestServiceClient();
     private CommentRestServiceClient commentService = new CommentRestServiceClient();
 
-    public String inGameName;
-    public String lastPlayedGame;
+    private String inGameName;
+    private String lastPlayedGame;
 
     public enum Choice {
         GAME,
@@ -29,16 +29,7 @@ public class ClientConsole implements UserInterface {
         COMMENT
     }
 
-    /**
-     * Input reader.
-     */
     private BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
-
-    /**
-     * Reads line of text from the reader.
-     *
-     * @return line as a string
-     */
 
     @Override
     public void choosingGame() {
@@ -48,7 +39,7 @@ public class ClientConsole implements UserInterface {
         if (inGameName.equals("")) {
             inGameName = "Anon";
         }
-        do {
+        while (true) {
             System.out.print("\nPlease choose a game\n1 - Minesweeeper - rating: ");
             System.out.println(ratingService.getAverageRating("minesweeper"));
             System.out.print("2 - Stones - rating: ");
@@ -57,7 +48,7 @@ public class ClientConsole implements UserInterface {
             System.out.println(ratingService.getAverageRating("memory"));
             System.out.println("\nX - exit");
             processInput(Choice.GAME);
-        } while (true);
+        }
     }
 
     private void gameSubMenu() {
