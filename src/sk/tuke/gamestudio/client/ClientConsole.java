@@ -6,10 +6,13 @@ import sk.tuke.gamestudio.client.stones.StonesPuzzle;
 import sk.tuke.gamestudio.entity.Comment;
 import sk.tuke.gamestudio.entity.Rating;
 import sk.tuke.gamestudio.entity.Score;
+import sk.tuke.gamestudio.entity.Weather.Clouds;
+import sk.tuke.gamestudio.entity.Weather.WeatherMap;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -19,6 +22,7 @@ public class ClientConsole implements UserInterface {
     private RatingRestServiceClient ratingService = new RatingRestServiceClient();
     private ScoreRestServiceClient scoreService = new ScoreRestServiceClient();
     private CommentRestServiceClient commentService = new CommentRestServiceClient();
+    private WeatherRestServiceClient weatherService = new WeatherRestServiceClient();
 
     private String inGameName;
     private String lastPlayedGame;
@@ -34,6 +38,10 @@ public class ClientConsole implements UserInterface {
     @Override
     public void choosingGame() {
         System.out.println("Welcome sir or madam " + System.getProperty("user.name"));
+        WeatherMap weatherMap = weatherService.getForecast();
+        System.out.println("Current temperature at Košice is :" + weatherMap.getMain().temp + " °C");
+        Clouds clouds = weatherMap.getClouds();
+        System.out.println("Cloudiness: " + clouds.all + "%");
         System.out.println("\nPlease enter your in-game name:");
         inGameName = readLine();
         if (inGameName.equals("")) {
@@ -156,7 +164,7 @@ public class ClientConsole implements UserInterface {
             System.out.println("\nWould you like to rate the game?");
             System.out.println("Rating 1 - 5 or 0 for no rating");
             input = readLine();
-            if (!Pattern.matches("[\\D]*", input)) {
+            if (Pattern.matches("^\\d+$", input)) {
                 rate = Integer.parseInt(input);
             } else {
                 System.out.println("Not an option");

@@ -6,7 +6,6 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
-import java.util.ArrayList;
 import java.util.List;
 
 @Stateless
@@ -14,11 +13,10 @@ public class RatingServiceImplJPA implements RatingService {
 
     @PersistenceContext
     private EntityManager entityManager;
-    private static Rating myRating = null;
 
     @Override
     public void setRating(Rating rating) {
-        Rating oldRating = null;
+        Rating oldRating;
         try {
             oldRating = entityManager.createNamedQuery("Rating.checkForRating", Rating.class)
                     .setParameter("game", rating.getGame())

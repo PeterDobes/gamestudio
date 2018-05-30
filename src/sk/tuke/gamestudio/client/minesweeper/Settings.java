@@ -10,7 +10,7 @@ public class Settings implements Serializable {
     private final int columnCount;
     private final int mineCount;
 
-    public static final Settings TESTING = new Settings (1, 1, 0);
+//    public static final Settings TESTING = new Settings (2, 2, 1);
     public static final Settings BEGINNER = new Settings(9, 9, 10);
     public static final Settings INTERMEDIATE = new Settings(16, 16, 40);
     public static final Settings EXPERT = new Settings(16, 30, 99);
