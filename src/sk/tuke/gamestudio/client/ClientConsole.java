@@ -1,8 +1,12 @@
 package sk.tuke.gamestudio.client;
 
-import sk.tuke.gamestudio.client.memory.Memory;
-import sk.tuke.gamestudio.client.minesweeper.Minesweeper;
-import sk.tuke.gamestudio.client.stones.StonesPuzzle;
+import sk.tuke.gamestudio.client.clientServices.CommentRestServiceClient;
+import sk.tuke.gamestudio.client.clientServices.RatingRestServiceClient;
+import sk.tuke.gamestudio.client.clientServices.ScoreRestServiceClient;
+import sk.tuke.gamestudio.client.clientServices.WeatherRestServiceClient;
+import sk.tuke.gamestudio.client.games.memory.Memory;
+import sk.tuke.gamestudio.client.games.minesweeper.Minesweeper;
+import sk.tuke.gamestudio.client.games.stones.StonesPuzzle;
 import sk.tuke.gamestudio.entity.Comment;
 import sk.tuke.gamestudio.entity.Rating;
 import sk.tuke.gamestudio.entity.Score;
@@ -12,7 +16,6 @@ import sk.tuke.gamestudio.entity.Weather.WeatherMap;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

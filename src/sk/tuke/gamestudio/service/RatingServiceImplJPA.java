@@ -1,6 +1,7 @@
 package sk.tuke.gamestudio.service;
 
 import sk.tuke.gamestudio.entity.Rating;
+import sk.tuke.gamestudio.service.interfaces.RatingService;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;

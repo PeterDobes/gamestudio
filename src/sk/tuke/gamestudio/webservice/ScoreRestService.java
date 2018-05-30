@@ -1,15 +1,12 @@
  package sk.tuke.gamestudio.webservice;
 
 import sk.tuke.gamestudio.entity.Score;
-import sk.tuke.gamestudio.service.ScoreException;
-import sk.tuke.gamestudio.service.ScoreService;
+import sk.tuke.gamestudio.service.interfaces.ScoreException;
+import sk.tuke.gamestudio.service.interfaces.ScoreService;
 
 import javax.ejb.EJB;
 import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriBuilder;
-import java.util.Date;
 import java.util.List;
 
 @Path("/score")

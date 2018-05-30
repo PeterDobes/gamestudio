@@ -1,7 +1,7 @@
 package sk.tuke.gamestudio.webservice;
 
 import sk.tuke.gamestudio.entity.Rating;
-import sk.tuke.gamestudio.service.RatingService;
+import sk.tuke.gamestudio.service.interfaces.RatingService;
 
 import javax.ejb.EJB;
 import javax.ws.rs.*;

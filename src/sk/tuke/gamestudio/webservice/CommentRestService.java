@@ -1,13 +1,11 @@
 package sk.tuke.gamestudio.webservice;
 
 import sk.tuke.gamestudio.entity.Comment;
-import sk.tuke.gamestudio.service.CommentService;
+import sk.tuke.gamestudio.service.interfaces.CommentService;
 
 import javax.ejb.EJB;
 import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriBuilder;
 import java.util.List;
 
 @Path("/comment")

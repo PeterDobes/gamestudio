@@ -2,6 +2,7 @@ package sk.tuke.gamestudio.service;
 
 
 import sk.tuke.gamestudio.entity.Comment;
+import sk.tuke.gamestudio.service.interfaces.CommentService;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
