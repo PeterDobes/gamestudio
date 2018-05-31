@@ -17,9 +17,8 @@ public class RatingServiceImplJPA implements RatingService {
 
     @Override
     public void setRating(Rating rating) {
-        Rating oldRating;
         try {
-            oldRating = entityManager.createNamedQuery("Rating.checkForRating", Rating.class)
+            Rating oldRating = entityManager.createNamedQuery("Rating.checkForRating", Rating.class)
                     .setParameter("game", rating.getGame())
                     .setParameter("player", rating.getPlayer())
                     .getSingleResult();
@@ -30,15 +29,13 @@ public class RatingServiceImplJPA implements RatingService {
     }
 
     @Override
-    public String getAverageRating(String game) {
-        String rating = "-not rated yet-";
+    public Double getAverageRating(String game) {
         try {
-            rating = entityManager.createNamedQuery("Rating.getAverageRating")
-                    .setParameter("game", game).getSingleResult().toString().substring(0, 3);
-        } catch (Exception e) {
-            return rating;
+            return (Double) entityManager.createNamedQuery("Rating.getAverageRating")
+                    .setParameter("game", game).getSingleResult();
+        } catch (NoResultException e) {
+            return null;
         }
-        return rating + " stars";
     }
 
     @Override

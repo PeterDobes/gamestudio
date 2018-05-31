@@ -24,20 +24,19 @@ public class RatingRestServiceClient implements RatingService {
                     .post(Entity.entity(rating, MediaType.APPLICATION_JSON), Response.class);
         } catch (Exception e) {
             System.err.println("Error adding rating");
-            e.printStackTrace();
         }
     }
 
     @Override
-    public String getAverageRating(String game) {
+    public Double getAverageRating(String game) {
         try {
             Client client = ClientBuilder.newClient();
             return client.target(URL)
                     .path("/" + game + "/average")
-                    .request(MediaType.APPLICATION_JSON)
-                    .get(new GenericType<String>() {});
+                    .request(MediaType.TEXT_PLAIN)
+                    .get(new GenericType<Double>() {});
         } catch (Exception e) {
-            return "Unable to load rating";
+            return 0.0;
         }
     }
 

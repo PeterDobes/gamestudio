@@ -7,15 +7,16 @@ import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import sk.tuke.gamestudio.client.games.ExitException;
+import sk.tuke.gamestudio.client.games.GameUserInterface;
 import sk.tuke.gamestudio.entity.Score;
 import sk.tuke.gamestudio.client.games.minesweeper.Minesweeper;
-import sk.tuke.gamestudio.client.games.minesweeper.UserInterface;
 import sk.tuke.gamestudio.client.games.minesweeper.core.*;
 
 /**
  * Console user interface.
  */
-public class ConsoleUI implements UserInterface {
+public class ConsoleUI implements GameUserInterface<Field> {
     /**
      * Playing field.
      */
@@ -45,7 +46,7 @@ public class ConsoleUI implements UserInterface {
      * @param field field of mines and clues
      */
     @Override
-    public void newGameStarted(Field field) {
+    public void newGame(Field field) {
         this.field = field;
         do {
             update();
@@ -117,31 +118,32 @@ public class ConsoleUI implements UserInterface {
      */
     private void processInput() {
         try {
-            handleInput(readLine());
+            handleInput();
         } catch (WrongFormatException ex) {
             System.err.println(ex.getMessage());
         }
     }
 
-    private void handleInput(String input) throws WrongFormatException {
+    private void handleInput() throws WrongFormatException {
         boolean inNok = true;
         while (inNok) {
             System.out.println();
-            System.out.println("Zadaj prikaz alebo \"H\" ak nepoznas prikazy");
+            System.out.println("Enter a command or \"H\" for list of commands");
+            String input = readLine();
             Pattern p = Pattern.compile("(?i)([X])?([H])?(([OM])([A-I])([0-8]))?");
             Matcher m = p.matcher(input.toLowerCase());
-            if (m.matches()) {
+            if (m.matches() && !input.equals("")) {
                 inNok = false;
                 switch (m.group(0).charAt(0)) {
                     case 'x':
-                        return;
+                        throw new ExitException();
                     case 'h':
                         System.out.println(
-                                "X - ukonci" + "\n" +
-                                        "MXY - oznac pole" + "\n" +
-                                        "OXY - otvor pole" + "\n" +
-                                        "X -> A-I, Y -> 0-8 (suradnice)");
-                        processInput();
+                                "X - exit" + "\n" +
+                                        "MXY - mark tile" + "\n" +
+                                        "OXY - open tile" + "\n" +
+                                        "X -> A-I, Y -> 0-8 (coordinates)");
+                        inNok = true;
                         break;
                     case 'm':
                         int rowM = m.group(0).charAt(1) - 97;
@@ -149,7 +151,7 @@ public class ConsoleUI implements UserInterface {
                         if (rowM < field.getRowCount() && colM < field.getColumnCount()) {
                             field.markTile(rowM, colM);
                         } else {
-                            System.err.println("Suradnice mimo rozsah");
+                            System.err.println("Coordinates out of range");
                         }
                         break;
                     case 'o':
@@ -158,12 +160,12 @@ public class ConsoleUI implements UserInterface {
                         if (rowO < field.getRowCount() && colO < field.getColumnCount()) {
                             field.openTile(rowO, colO);
                         } else {
-                            System.err.println("Suradnice mimo rozsah");
+                            System.err.println("Coordinates out of range");
                         }
                         break;
                 }
             } else {
-                throw new WrongFormatException("Wrong Format Exception");
+                System.err.println("Wrong Format Exception");
             }
         }
     }

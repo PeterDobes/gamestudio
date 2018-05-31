@@ -7,7 +7,7 @@ import java.util.List;
 public interface RatingService {
     void setRating(Rating rating);
 
-    String getAverageRating(String game);
+    Double getAverageRating(String game);
 
     List<Rating> getAllRatings(String game);
 }

@@ -1,8 +1,9 @@
 package sk.tuke.gamestudio.client.games.stones.consoleui;
 
+import sk.tuke.gamestudio.client.games.ExitException;
+import sk.tuke.gamestudio.client.games.GameUserInterface;
 import sk.tuke.gamestudio.entity.Score;
 import sk.tuke.gamestudio.client.games.stones.StonesPuzzle;
-import sk.tuke.gamestudio.client.games.stones.UserInterface;
 import sk.tuke.gamestudio.client.games.stones.engine.Field;
 import sk.tuke.gamestudio.client.games.stones.engine.Space;
 import sk.tuke.gamestudio.client.games.stones.engine.Stone;
@@ -13,7 +14,7 @@ import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ConsoleUI implements UserInterface {
+public class ConsoleUI implements GameUserInterface<Field> {
     private Field field;
     private BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
 
@@ -111,7 +112,7 @@ public class ConsoleUI implements UserInterface {
                 inNok = false;
                 switch (m.group(0)) {
                     case "exit":
-                        return;
+                        throw new ExitException();
                     case "new":
                         field = new Field(field.getRowCount(), field.getColumnCount());
                         newGame(field);

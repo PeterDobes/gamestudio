@@ -1,10 +1,10 @@
 package sk.tuke.gamestudio.client.games.memory.consoleui;
 
+import sk.tuke.gamestudio.client.games.ExitException;
+import sk.tuke.gamestudio.client.games.GameUserInterface;
 import sk.tuke.gamestudio.client.games.memory.Memory;
-import sk.tuke.gamestudio.client.games.memory.UserInterface;
 import sk.tuke.gamestudio.client.games.memory.engine.Field;
 import sk.tuke.gamestudio.client.games.memory.engine.Target;
-import sk.tuke.gamestudio.client.games.memory.engine.Tile;
 import sk.tuke.gamestudio.entity.Score;
 
 import java.io.BufferedReader;
@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ConsoleUI implements UserInterface {
+public class ConsoleUI implements GameUserInterface<Field> {
 
     private static final String cya = "\u001B[36m";
     private static final String red = "\u001B[31m";
@@ -50,7 +50,7 @@ public class ConsoleUI implements UserInterface {
             processInput();
             if (field.isSolved()) {
                 System.out.println(gre + "Done!\n\n" + reset);
-                reveal();
+                field.reveal();
                 update();
                 pause(2);
                 round++;
@@ -137,31 +137,10 @@ public class ConsoleUI implements UserInterface {
     }
 
     private void showHint() {
-        hint();
+        field.hint();
         update();
-        hint();
+        field.hint();
         pause(4);
-    }
-
-    private void hint() {
-        for (int i = 0; i < field.getRowCount(); i++) {
-            for (int j = 0; j < field.getColumnCount(); j++) {
-                if (field.getTile(i, j) instanceof Target) {
-                    field.swtichState(i, j);
-                }
-            }
-        }
-    }
-
-    private void reveal() {
-        for (int i = 0; i < field.getRowCount(); i++) {
-            for (int j = 0; j < field.getColumnCount(); j++) {
-                Tile tile = field.getTile(i, j);
-                if (tile instanceof Target && tile.getState().equals(Tile.State.CLOSED)) {
-                    tile.setState(Tile.State.HIGHLIGHT);
-                }
-            }
-        }
     }
 
     private void pause(int time) {
@@ -185,12 +164,14 @@ public class ConsoleUI implements UserInterface {
         boolean inNok = true;
         while (inNok) {
             System.out.println();
-            Pattern p = Pattern.compile("(?i)([X])?([A-I])([0-8])?");
+            Pattern p = Pattern.compile("(?i)([X])?(([A-I])([0-8]))?");
             Matcher m = p.matcher(input.toLowerCase());
-            if (m.matches()) {
+            if (m.matches() && !input.equals("") ) {
                 inNok = false;
                 if (m.group(0).charAt(0) == 'x') {
-                    System.exit(0);
+                    Score score = new Score(Memory.getName(), "memory", 22000, new Date());
+                    Memory.getInstance().saveScore(score);
+                    throw new ExitException();
                 } else {
                     int rowO = m.group(0).charAt(0) - 97;
                     if (m.group(0).length() == 2) {

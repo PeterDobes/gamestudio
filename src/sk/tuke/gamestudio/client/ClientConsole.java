@@ -4,6 +4,7 @@ import sk.tuke.gamestudio.client.clientServices.CommentRestServiceClient;
 import sk.tuke.gamestudio.client.clientServices.RatingRestServiceClient;
 import sk.tuke.gamestudio.client.clientServices.ScoreRestServiceClient;
 import sk.tuke.gamestudio.client.clientServices.WeatherRestServiceClient;
+import sk.tuke.gamestudio.client.games.ExitException;
 import sk.tuke.gamestudio.client.games.memory.Memory;
 import sk.tuke.gamestudio.client.games.minesweeper.Minesweeper;
 import sk.tuke.gamestudio.client.games.stones.StonesPuzzle;
@@ -19,6 +20,8 @@ import java.io.InputStreamReader;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static org.eclipse.persistence.expressions.ExpressionOperator.round;
 
 public class ClientConsole implements UserInterface {
 
@@ -42,9 +45,13 @@ public class ClientConsole implements UserInterface {
     public void choosingGame() {
         System.out.println("Welcome sir or madam " + System.getProperty("user.name"));
         WeatherMap weatherMap = weatherService.getForecast();
-        System.out.println("Current temperature at Košice is :" + weatherMap.getMain().temp + " °C");
-        Clouds clouds = weatherMap.getClouds();
-        System.out.println("Cloudiness: " + clouds.all + "%");
+
+        if (weatherMap != null) {
+            System.out.println("Current temperature at Košice is :" + weatherMap.getMain().temp + " °C");
+            Clouds clouds = weatherMap.getClouds();
+            System.out.println("Cloudiness: " + clouds.all + "%");
+        }
+
         System.out.println("\nPlease enter your in-game name:");
         inGameName = readLine();
         if (inGameName.equals("")) {
@@ -52,17 +59,17 @@ public class ClientConsole implements UserInterface {
         }
         while (true) {
             System.out.print("\nPlease choose a game\n1 - Minesweeeper - rating: ");
-            System.out.println(ratingService.getAverageRating("minesweeper"));
+            getAverageRating("minesweeper");
             System.out.print("2 - Stones - rating: ");
-            System.out.println(ratingService.getAverageRating("stones"));
+            getAverageRating("stones");
             System.out.print("3 - Memory Matrix - rating: ");
-            System.out.println(ratingService.getAverageRating("memory"));
+            getAverageRating("memory");
             System.out.println("\nX - exit");
             processInput(Choice.GAME);
         }
     }
 
-    private void gameSubMenu() {
+    private void printGameSubMenu() {
         switch (lastPlayedGame) {
             case "minesweeper":
                 System.out.println(
@@ -95,7 +102,7 @@ public class ClientConsole implements UserInterface {
                 break;
         }
 
-        System.out.println("Rating: " + ratingService.getAverageRating(lastPlayedGame));
+        getAverageRating(lastPlayedGame);
         getChampion(lastPlayedGame);
         while (true) {
             System.out.println("\n1 - Run");
@@ -114,8 +121,10 @@ public class ClientConsole implements UserInterface {
                     case 'x':
                         return;
                     case '1':
-                        launch();
-                        processInput(Choice.RATING);
+                        try {
+                            launch();
+                            processInput(Choice.RATING);
+                        } catch (ExitException e) {}
                         break;
                     case '2':
                         processInput(Choice.RATING);
@@ -135,6 +144,17 @@ public class ClientConsole implements UserInterface {
             } else {
                 System.err.println("Not an option");
             }
+        }
+    }
+
+    private void getAverageRating(String game) {
+        Double rating = ratingService.getAverageRating(game);
+        if (rating == null) {
+            System.out.println("-not rated yet-");
+        } else if (rating == 0.0) {
+            System.out.println("-unable to load rating-");
+        } else {
+            System.out.println("Rating: " + round(rating, 1) + " stars");
         }
     }
 
@@ -207,7 +227,7 @@ public class ClientConsole implements UserInterface {
                 System.err.println("Not an option");
             }
         }
-        gameSubMenu();
+        printGameSubMenu();
     }
 
     private void leaveAComment() {
@@ -269,12 +289,21 @@ public class ClientConsole implements UserInterface {
     }
 
     private void getChampion(String game) {
-        List<Score> champion = scoreService.getChampion(game);
-        if (!champion.isEmpty()) {
-            System.out.println("Champion of the game: " + champion.get(0).getPlayer() + " - " +
-                    champion.get(0).getPoints());
+        Score champion = scoreService.getChampion(game);
+        if (champion != null) {
+            System.out.println("Champion of the game: " + champion.getPlayer() + " - " +
+                    champion.getPoints());
         } else {
             System.out.println("-no champions yet-");
         }
+    }
+
+    public static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        long factor = (long) Math.pow(10, places);
+        value = value * factor;
+        long tmp = Math.round(value);
+        return (double) tmp / factor;
     }
 }

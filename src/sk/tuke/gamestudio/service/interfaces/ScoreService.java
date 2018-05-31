@@ -9,5 +9,5 @@ public interface ScoreService {
 
     List<Score> getBestScoresForGame(String game) throws ScoreException;
 
-    List<Score> getChampion(String game);
+    Score getChampion(String game);
 }

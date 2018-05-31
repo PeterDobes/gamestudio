@@ -87,6 +87,27 @@ public class Field {
         return count;
     }
 
+    public void hint() {
+        for (int i = 0; i < getRowCount(); i++) {
+            for (int j = 0; j < getColumnCount(); j++) {
+                if (getTile(i, j) instanceof Target) {
+                    swtichState(i, j);
+                }
+            }
+        }
+    }
+
+    public void reveal() {
+        for (int i = 0; i < getRowCount(); i++) {
+            for (int j = 0; j < getColumnCount(); j++) {
+                Tile tile = getTile(i, j);
+                if (tile instanceof Target && tile.getState().equals(Tile.State.CLOSED)) {
+                    tile.setState(Tile.State.HIGHLIGHT);
+                }
+            }
+        }
+    }
+
     public Tile[][] getTiles() {
         return tiles;
     }

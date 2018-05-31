@@ -31,7 +31,7 @@ public class ScoreRestService {
     @GET
     @Path("/{game}/champion")
     @Produces("application/json")
-    public List<Score> getChampion(@PathParam("game") String game) {
+    public Score getChampion(@PathParam("game") String game) {
         return scoreService.getChampion(game);
     }
 }

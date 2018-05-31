@@ -23,7 +23,7 @@ public class ScoreRestServiceClient implements ScoreService {
                     .request(MediaType.APPLICATION_JSON)
                     .post(Entity.entity(score, MediaType.APPLICATION_JSON), Response.class);
         } catch (Exception e) {
-            throw new RuntimeException("Error saving score", e);
+            System.err.println("Error saving score");
         }
     }
 
@@ -37,23 +37,21 @@ public class ScoreRestServiceClient implements ScoreService {
                     .get(new GenericType<List<Score>>() {
                     });
         } catch (Exception e) {
-            System.err.println("Error loading score");
             return new ArrayList<>();
         }
     }
 
     @Override
-    public List<Score> getChampion(String game) {
+    public Score getChampion(String game) {
         try {
             Client client = ClientBuilder.newClient();
             return client.target(URL)
                     .path("/" + game + "/champion")
                     .request(MediaType.APPLICATION_JSON)
-                    .get(new GenericType<List<Score>>() {
+                    .get(new GenericType<Score>() {
                     });
         } catch (Exception e) {
-            System.err.println("Error loading the champion");
-            return new ArrayList<>();
+            return null;
         }
     }
 }

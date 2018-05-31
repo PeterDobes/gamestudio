@@ -24,7 +24,7 @@ public class Minesweeper {
         
         Field field = new Field(setting.getRowCount(), setting.getColumnCount(),setting.getMineCount());
         startMillis = System.currentTimeMillis();
-        userInterface.newGameStarted(field);
+        userInterface.newGame(field);
     }
 
     public static void main(String[] args) {

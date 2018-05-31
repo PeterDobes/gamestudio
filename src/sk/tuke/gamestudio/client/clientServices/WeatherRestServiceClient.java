@@ -24,8 +24,7 @@ public class WeatherRestServiceClient {
                     .get(new GenericType<WeatherMap>() {
                     });
         } catch (Exception e) {
-            System.err.println("Error loading forecast");
-            return new WeatherMap();
+            return null;
         }
     }
 }
