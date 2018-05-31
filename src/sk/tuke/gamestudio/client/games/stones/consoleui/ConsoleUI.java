@@ -108,7 +108,7 @@ public class ConsoleUI implements GameUserInterface<Field> {
             Matcher m = p.matcher(input.toLowerCase());
             int sRow = field.getSpace().getRow();
             int sCol = field.getSpace().getCol();
-            if (m.matches()) {
+            if (m.matches() && !input.equals("")) {
                 inNok = false;
                 switch (m.group(0)) {
                     case "exit":
