@@ -169,8 +169,6 @@ public class ConsoleUI implements GameUserInterface<Field> {
             if (m.matches() && !input.equals("") ) {
                 inNok = false;
                 if (m.group(0).charAt(0) == 'x') {
-                    Score score = new Score(Memory.getName(), "memory", 22000, new Date());
-                    Memory.getInstance().saveScore(score);
                     throw new ExitException();
                 } else {
                     int rowO = m.group(0).charAt(0) - 97;
